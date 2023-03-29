@@ -6,7 +6,6 @@
 /**
  * print_char - prints a single character
  * @args: va_list containing the character to print
- * @count: pointer to the character count
  *
  * Return: void
  */
@@ -69,9 +68,7 @@ int _printf(const char *format, ...)
 			}
 			else
 			{
-				write(1, "%", 1);
-				write(1, "r", 1);
-				count += 2;
+				count += write(1, "%r", 2);
 			}
 
 		}
