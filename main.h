@@ -5,6 +5,6 @@
 
 int _putchar(char c);
 int print_char(va_list args);
-void print_string(va_list args, int *count);
+int print_string(va_list args);
 int _printf(const char *format, ...);
 #endif

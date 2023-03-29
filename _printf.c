@@ -24,16 +24,20 @@ int print_char(va_list args)
  *
  * Return: void
  */
-void print_string(va_list args, int *count)
+int print_string(va_list args)
 {
 	char *s = va_arg(args, char *);
+	int len = 0;
 
 	while (*s)
 	{
 		write(1, s, 1);
 		s++;
-		*count += 1;
+		len++;
+		
 	}
+
+	return (len);
 }
 
 /**
@@ -60,22 +64,19 @@ int _printf(const char *format, ...)
 			if (*format == 'c')
 				count += print_char(args);
 			else if (*format == 's')
-				print_string(args, &count);
+				count += print_string(args);
 			else if (*format == '%')
-			{
-				write(1, "%", 1);
-				count++;
-			}
+				count += write(1, "%", 1);
 			else
 			{
-				count += write(1, "%r", 2);
+				count += write(1, "%", 1);
+				count += write(1, format + 1, 1);
 			}
 
 		}
 		else
 		{
-			write(1, format, 1);
-			count++;
+			count += write(1, format, 1);
 		}
 
 	}
