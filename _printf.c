@@ -63,11 +63,15 @@ int _printf(const char *format, ...)
 			else if (*format == 's')
 				print_string(args, &count);
 			else if (*format == '%')
+			{
 				write(1, "%", 1);
+				count++;
+			}
 			else
 			{
 				write(1, "%", 1);
 				write(1, "r", 1);
+				count += 2;
 			}
 
 		}
@@ -76,6 +80,7 @@ int _printf(const char *format, ...)
 			write(1, format, 1);
 			count++;
 		}
+
 	}
 
 	va_end(args);
