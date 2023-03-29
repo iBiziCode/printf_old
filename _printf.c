@@ -20,7 +20,6 @@ int print_char(va_list args)
 /**
  * print_string - prints a string
  * @args: va_list containing the string to print
- * @count: pointer to the character count
  *
  * Return: void
  */
@@ -34,7 +33,6 @@ int print_string(va_list args)
 		write(1, s, 1);
 		s++;
 		len++;
-		
 	}
 
 	return (len);
