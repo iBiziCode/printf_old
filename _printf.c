@@ -6,35 +6,36 @@
 /**
  * print_char - prints a single character
  * @args: va_list containing the character to print
- * @count: pointer to the character count
  *
  * Return: void
  */
-void print_char(va_list args, int *count)
+void print_char(va_list args)
 {
 	char c = va_arg(args, int);
 
-	write(1, &c, 1);
-	*count += 1;
+	_putchar(c);
+	return (1);
 }
 
 /**
  * print_string - prints a string
  * @args: va_list containing the string to print
- * @count: pointer to the character count
  *
  * Return: void
  */
-void print_string(va_list args, int *count)
+void print_string(va_list args)
 {
 	char *s = va_arg(args, char *);
+	int len = 0;
 
 	while (*s)
 	{
 		write(1, s, 1);
 		s++;
-		*count += 1;
+		len++;
 	}
+
+	return (len);
 }
 
 /**
@@ -46,41 +47,38 @@ void print_string(va_list args, int *count)
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
+	int count = 0, i = 0;
 
 	va_start(args, format);
 
-	 if (!format || (format[0] == '%' && format[1] == '\0'))
-                return (-1);
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 
-	while (*format)
+	for (i = 0; format && format[i]; i++)
 	{
-		if (*format == '%')
+		if (format[i] == '%')
 		{
-			format++;
-			switch (*format)
+			if (format[i + 1] == 'c')
+				count += print_char(va_arg(args, int));
+			else if (format[i + 1] == 's')
+				count += print_string(va_arg(args, char *));
+			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+				count += print_int(va_arg(args, int));
+			else if (format[i + 1] == '%')
+				count += print_char('%');
+			else
 			{
-			case 'c':
-				print_char(args, &count);
-				break;
-			case 's':
-				print_string(args, &count);
-				break;
-			case '%':
-				write(1, "%", 1);
-				count++;
-				break;
-			default:
-				break;
+				print_char('%');
+				print_char(format[i + 1]);
+				count += 2;
 			}
+			i++;
 		}
 		else
 		{
-			write(1, format, 1);
+			print_char(format[i]);
 			count++;
 		}
-
-		format++;
 	}
 
 	va_end(args);
