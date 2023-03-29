@@ -65,7 +65,11 @@ int _printf(const char *format, ...)
 			else if (*format == '%')
 				write(1, "%", 1);
 			else
+			{
+				write(1, "%", 1);
 				write(1, "r", 1);
+			}
+
 		}
 		else
 		{
