@@ -1,7 +1,6 @@
 #include "main.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdarg.h>
 
 /**
  * print_char - prints a single character
@@ -67,8 +66,7 @@ int _printf(const char *format, ...)
 				count += write(1, "%", 1);
 			else
 			{
-				count += write(1, "%", 1);
-				count += write(1, format + 1, 1);
+				count += write(1, "%r", 2);
 			}
 
 		}
